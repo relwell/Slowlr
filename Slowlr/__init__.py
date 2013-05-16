@@ -3,20 +3,32 @@
 Core library for handling slow query logs with Solr.
 """
 
-import urlparse
+import urlparse, datetime
+from pymongo import MongoClient
 
 class LogHandler(object):
     
      def __init__(self):
-         # obv needs to get mongo DI in hurr
-         pass
+          #todo: config port and host
+          self.client = MongoClient()
+          self.db = self.client.slowlr
+          self.slowQTime = 100 #todo: configurable
 
      """
      Given a log line, introduce logic for storing info
      """
      def handle(self, line):
          line = LogLine(line)
-         print line.getTimestamp(), line.get(u'QTime'), line.getParams().get(u'q', u'')
+         qtime = line.get(u'QTime')
+         #note we assume log emissions are real-time
+         if qtime >= self.slowQTime:
+              self.db.queries.insert({
+                   u'query' : line.getParams().get(u'q', u''),
+                   u'timestamp' : datetime.datetime.utcnow(),
+                   u'qtime' : int(qtime),
+                   u'hits' : int(self.get('hits', 0))
+              })
+         print line.getTimestamp(), qtime, line.getParams().get(u'q', u'')
 
 
 class LogLine(object):
