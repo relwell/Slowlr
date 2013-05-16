@@ -1,0 +1,14 @@
+<html>
+<body>
+<h1>Slow Queries</h1>
+<table>
+{% for query in slow_queries %}
+<tr>
+<td>{{query.qtime}}</td>
+<td>{{query.query}}</td>
+<td>{{query.hits}}</td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html
