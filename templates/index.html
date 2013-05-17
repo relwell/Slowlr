@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Slowlr: Slow Query Logging for Solr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css' ) }}" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <h1>Slow Queries</h1>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <table>
+      <tr>
+	<th>Query Time (ms)</th>
+	<th>Query</th>
+	<th>Hits</th>
+      </tr>
+      {% for query in slow_queries %}
+      <tr>
+	<td>{{query.qtime}}</td>
+	<td>{{query.query}}</td>
+	<td>{{query.hits}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
