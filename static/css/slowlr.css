@@ -1,4 +1,8 @@
-h1 { text-align: center; }
+h1,h2 { text-align: center; font-family: 'Erica One', cursive; }
+
+h1{ text-shadow: 10px 10px 2px rgba(150, 150, 150, 1); }
+
+#query-string { text-align: center, font-size: 18px; font-weight: bold; background-color: rgba( 200, 200, 200, 0.8 ); padding: 5px; }
 
 #queries, #query{ display: none; }
 
