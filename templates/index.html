@@ -10,19 +10,23 @@
     <h1>Slow Queries</h1>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/json_queries.js') }}"></script>
     <table>
+      <thead>
       <tr>
 	<th>Query Time (ms)</th>
 	<th>Query</th>
 	<th>Hits</th>
       </tr>
-      {% for query in slow_queries %}
+      </thead>
+      <tfoot>
       <tr>
-	<td>{{query.qtime}}</td>
-	<td>{{query.query}}</td>
-	<td>{{query.hits}}</td>
+	<td><a href="" id="back">Back</a></td>
+	<td></td>
+	<td><a href="" id="more">More</a></td>
       </tr>
-      {% endfor %}
+      </tfoot>
+      <tbody></tbody>
     </table>
   </body>
 </html>
