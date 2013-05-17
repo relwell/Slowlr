@@ -8,7 +8,6 @@ var Paginator = {
 			var row = jQuery('<tr></tr>');
 			row.append('<td>'+value['qtime']+'</td>');
 			row.append('<td>'+value['query']+'</td>');
-			row.append('<td>'+value['hits']+'</td>');
 			jQuery('tbody').append(row);
 		    });
 	    });

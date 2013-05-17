@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify
 from flask.ext.pymongo import PyMongo
+from bson import Code
 
 app = Flask('slowlr')
 mongo = PyMongo(app)
@@ -7,15 +8,19 @@ mongo = PyMongo(app)
 app.debug = True
 limit = 25
 
-@app.route('/')
+@app.route(u'/')
 def home_page():
-    return render_template('index.html')
+    return render_template(u'index.html')
 
-@app.route('/_page/<page>')
+@app.route(u'/_page/<page>')
 def get_page(page):
     offset = (int(page) -1) * limit
     currlimit = offset + limit
-    slow_queries = [{'qtime':instance['qtime'], 'query':instance['query'], 'hits':instance.get('hits', 0)} for instance in mongo.db.queries.find().sort('qtime', -1)[offset:currlimit]]
-    return jsonify({'queries':slow_queries})
+    mf = Code(u"""function() { var q = this.query; this.instances.forEach(function(z) { emit( q, z.qtime ); } ) }""")
+    rf = Code(u"""rf = function( key, vals ) { parseFloat(Array.sum(vals))/parseFloat(vals.length); }""")
+    mongo.db.queries.map_reduce(mf, rf, u"avg_slow_queries")
+    results = mongo.db.avg_slow_queries.find().sort(u'value', -1)
+    slow_queries = [{u'qtime':instance[u'value'], u'query':instance[u'_id']} for instance in results[offset:currlimit]]
+    return jsonify({u'queries':slow_queries})
 
 app.run()
