@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css' ) }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='css/slowlr.css' ) }}" rel="stylesheet" media="screen">
   </head>
   <body>
     <h1>Slow Queries</h1>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/json_queries.js') }}"></script>
-    <table>
+    <section id="queries">
+    <table id="queries-table">
       <thead>
       <tr>
 	<th>Avg. Query Time (ms)</th>
@@ -20,11 +22,30 @@
       </thead>
       <tfoot>
       <tr>
-	<td><a href="" id="back">Back</a></td>
-	<td><a href="" id="more">More</a></td>
+	<td><span class="action" id="back">Back</span></td>
+	<td><span class="action" id="more">More</span></td>
       </tr>
       </tfoot>
       <tbody></tbody>
     </table>
+    </section>
+    <section id="query">
+      <h4></h4>
+      <table id="query-table">
+      <thead>
+      <tr>
+	<th>Timestamp</th>
+	<th>Query Time (ms)</th>
+	<th>Hits</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+	<td colspan="3"><span class="action" id="return">Return to Queries</span></td>
+      </tr>
+      </tfoot>
+      <tbody></tbody>
+    </table>
+    </section>
   </body>
 </html>

@@ -1,6 +1,7 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from flask.ext.pymongo import PyMongo
 from bson import Code
+from bson.json_util import dumps
 
 app = Flask('slowlr')
 mongo = PyMongo(app)
@@ -22,5 +23,10 @@ def get_page(page):
     results = mongo.db.avg_slow_queries.find().sort(u'value', -1)
     slow_queries = [{u'qtime':instance[u'value'], u'query':instance[u'_id']} for instance in results[offset:currlimit]]
     return jsonify({u'queries':slow_queries})
+
+@app.route(u'/_query/', methods=['POST'])
+def inspect_query():
+    query = request.form.get('query', '')
+    return dumps(mongo.db.queries.find_one({'query':query}))
 
 app.run()
