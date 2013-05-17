@@ -9,8 +9,8 @@ var getPage = function(page) {
 		data.queries.forEach( function (value){
 			var row = jQuery('<tr></tr>');
 			var q = value['query'];
-			row.append('<td>'+value['qtime']+'</td>');
-			row.append('<td><span class="action query" data-query="'+q+'">...'+q.substring(q.length-85, q.length)+'</a></td>');
+			row.append('<td class="qtime">'+value['qtime']+'</td>');
+			row.append('<td class="querystring"><span class="action query" data-query="'+q+'">...'+q.substring(q.length-85, q.length)+'</a></td>');
 			jQuery('#queries-table tbody').append(row);
 		    });
 	    });
@@ -40,13 +40,13 @@ jQuery(document).ready( function() {
 	jQuery('#queries-table').on( 'click', 'tr td span.query', function() {
 		jQuery.post(document.URL+'/_query/', { 'query': jQuery(this).data('query') }, function(jsonString, status) {
 			var data = jQuery.parseJSON(jsonString);
-			jQuery('#query h4').text(data.query);
+			jQuery('#query p').text(data.query);
 			jQuery('#query-table tbody').empty();
 			data.instances.forEach( function(datum) {
 				var row = jQuery('<tr></tr>');
-				row.append(jQuery('<td>'+(new Date(datum.timestamp.$date)).toISOString()+'</td>'));
-				row.append(jQuery('<td>'+datum.qtime+'</td>'));
-				row.append(jQuery('<td>'+datum.hits+'</td>'));
+				row.append(jQuery('<td class="timestamp">'+(new Date(datum.timestamp.$date)).toISOString()+'</td>'));
+				row.append(jQuery('<td class="q-qtime">'+datum.qtime+'</td>'));
+				row.append(jQuery('<td class="hits">'+datum.hits+'</td>'));
 				jQuery('#query-table tbody').append(row);
 			    });
 			jQuery('#queries').slideUp( 50, function() { jQuery('#query').slideDown(); } );

@@ -4,14 +4,16 @@
     <title>Slowlr: Slow Query Logging for Solr</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
+    <link rel="icon" type="image/ico" href="{{ url_for('static', filename='img/favicon.ico' ) }}">
     <link href="{{ url_for('static', filename='css/bootstrap.min.css' ) }}" rel="stylesheet" media="screen">
     <link href="{{ url_for('static', filename='css/slowlr.css' ) }}" rel="stylesheet" media="screen">
   </head>
   <body>
-    <h1>Slow Queries</h1>
+    <h1>Slowlr: Slow Query Log for Solr</h1>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/json_queries.js') }}"></script>
+    <article>
     <section id="queries">
     <table id="queries-table">
       <thead>
@@ -22,15 +24,15 @@
       </thead>
       <tfoot>
       <tr>
-	<td><span class="action" id="back">Back</span></td>
-	<td><span class="action" id="more">More</span></td>
+	<td id="back-cell"><span class="action" id="back">Back</span></td>
+	<td id="more-cell"><span class="action" id="more">More</span></td>
       </tr>
       </tfoot>
       <tbody></tbody>
     </table>
     </section>
     <section id="query">
-      <h4></h4>
+      <p id="query-string"></p>
       <table id="query-table">
       <thead>
       <tr>
@@ -47,5 +49,6 @@
       <tbody></tbody>
     </table>
     </section>
+    </article>
   </body>
 </html>
